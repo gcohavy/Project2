@@ -1,0 +1,25 @@
+<aura:component controller="PokemonController">
+    <aura:attribute Name='stringInput' Type='String' />
+    <aura:attribute Name='Error' Type='String' default='null' />
+    <aura:attribute Name='HP' Type='Integer'/>
+    <aura:attribute Name='Attack' Type='Integer'/>
+    <aura:attribute Name='Defense' Type='Integer'/>
+    <aura:attribute Name='ImageURL' Type='String'/>
+    <aura:attribute Name='Experience' Type='Integer'/>
+    <aura:attribute Name='Type' Type='String'/>
+    
+    <lightning:card title="Search for New Pokemon">
+        <lightning:formattedText>{!v.Error}</lightning:formattedText>
+    	<lightning:input type="text" label="Search" value="{!v.stringInput}"/>
+        <lightning:button variant="success" label="Search" onclick="{!c.search}"/>
+    </lightning:card>
+    <lightning:card title="Search results">
+        <img src='{!v.ImageURL}' alt='Image goes here'></img>
+        <p>Name: <lightning:formattedText value="{!v.stringInput}" /></p>
+        <p>Type: <lightning:formattedText value="{!v.Type}" /></p>
+        <p>HP: <lightning:formattedNumber value= "{!v.HP}" /></p>
+        <p>Attack: <lightning:formattedNumber value="{!v.Attack}" /></p>
+        <p>Defense: <lightning:formattedNumber value="{!v.Defense}" /></p>
+        <p>Experience: <lightning:formattedNumber value="{!v.Experience}" /></p>
+    </lightning:card>
+</aura:component>
