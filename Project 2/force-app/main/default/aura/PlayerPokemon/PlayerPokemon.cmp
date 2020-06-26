@@ -1,0 +1,20 @@
+<aura:component controller="PokemonController">
+    <aura:attribute name="Pokemon" type="Pokemon__c[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div style="display:flex; margin: 10px; padding:10px; text-align:center; flex-wrap:wrap; justify-content:center;
+                align-items:center;">
+        <aura:iteration items="{!v.Pokemon}" var="a">
+            <div style="border: 5px solid #FC0; border-radius:10px; margin: 20px; min-width:250px; min-height:350px;
+                        background-color:#EEF; padding: 10px;">
+                <h1 style="font-size: 18px; font-weight:700;">{!a.Name}</h1>
+                <img src='{!a.ImageURL__c}' alt='Image goes here'></img>
+                <p>Type: <lightning:formattedText value="{!a.Type__c}" /></p>
+                <p>HP: <lightning:formattedNumber value= "{!a.HP__c}" /></p>
+                <p>Attack: <lightning:formattedNumber value="{!a.Attack__c}" /></p>
+                <p>Defense: <lightning:formattedNumber value="{!a.Defense__c}" /></p>
+                <p>Experience: <lightning:formattedNumber value="{!a.Experience__c}" /></p>
+            </div>
+        </aura:iteration>
+    </div>
+</aura:component>

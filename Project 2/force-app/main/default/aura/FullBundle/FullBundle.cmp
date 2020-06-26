@@ -1,0 +1,4 @@
+<aura:component controller="PokemonController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <c:Search />
+    <c:PlayerPokemon />
+</aura:component>
