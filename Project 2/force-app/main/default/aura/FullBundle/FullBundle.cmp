@@ -1,3 +1,3 @@
-<aura:component controller="PokemonController" >
+<aura:component controller="PokemonController" implements="forceCommunity:availableForAllPageTypes" access="global">
     <c:Search />
 </aura:component>

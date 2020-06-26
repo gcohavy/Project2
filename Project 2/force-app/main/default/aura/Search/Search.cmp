@@ -1,5 +1,6 @@
 <aura:component controller="PokemonController">
     <aura:attribute Name='stringInput' Type='String' />
+    <aura:attribute Name='buttonDisabled' Type='Boolean' default="true" />
     <aura:attribute Name='Error' Type='String' default='null' />
     <aura:attribute Name='HP' Type='Integer'/>
     <aura:attribute Name='Attack' Type='Integer'/>
@@ -21,5 +22,6 @@
         <p>Attack: <lightning:formattedNumber value="{!v.Attack}" /></p>
         <p>Defense: <lightning:formattedNumber value="{!v.Defense}" /></p>
         <p>Experience: <lightning:formattedNumber value="{!v.Experience}" /></p>
+        <lightning:button variant="success" label="Add" onclick="{!c.addNewPokemon}" disabled="{!v.buttonDisabled}"/>
     </lightning:card>
 </aura:component>
