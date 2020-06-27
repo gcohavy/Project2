@@ -1,0 +1,6 @@
+<aura:component >
+    <aura:attribute name="playerPokemon" type="Pokemon__c[]" />
+    <aura:attribute name="enemyPokemon" type="Pokemon__c[]" />
+    
+    <p>Test</p>
+</aura:component>

@@ -47,8 +47,21 @@ public class PokemonController {
     @AuraEnabled
     public static List<Pokemon__c> getPlayerPokemon(String UserId) {
         Id conId = [SELECT ContactId FROM User WHERE Id=:UserId].ContactId;
-        List<Pokemon__c> Pokemon = [SELECT Name, Type__c, ImageURL__c, HP__c, Attack__c, Defense__c, Experience__c 
+        List<Pokemon__c> Pokemon = [SELECT Name, Type__c, ImageURL__c, HP__c, Attack__c, Defense__c, 
+                                    Experience__c, Fighter__c
                                    FROM Pokemon__c WHERE Player__c=:conId];
         return Pokemon;
+    }
+    
+    //Method to set up battle
+    @AuraEnabled
+    public static List<Pokemon__c> setBattlePokemon(List<Pokemon__c> incoming) {
+        //update incoming pokemon
+        //Select the first 3 pokemon who will fight
+        //Add them to the return Array
+        //Select 3 random pokemon from the API
+        //Add them to the Array
+        //return array of 6 Pokemon
+        return null;
     }
 }

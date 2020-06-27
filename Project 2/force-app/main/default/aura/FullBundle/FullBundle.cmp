@@ -1,4 +1,19 @@
 <aura:component controller="PokemonController" implements="forceCommunity:availableForAllPageTypes" access="global">
-    <c:Search />
-    <c:PlayerPokemon />
+    <aura:attribute name="fight" type="Boolean" default="false" />
+    
+    <h1 style="text-align:center; margin: 35px; font-size:18px;">POKEMON BATTLE SIMULATION</h1>
+    
+    <aura:if isTrue="{!!v.fight}">
+        <c:Search />
+        <c:PlayerPokemon />
+        <div style="text-align:center;">
+            <lightning:button variant="Destructive" label="BATTLE!" onclick="{!c.fight}"/>
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.fight}">
+        <c:PokemonBattle />
+            <lightning:button variant="success" label="Back" onclick="{!c.endFight}"/>
+    </aura:if>
+    <div style="height:50px;"></div>
 </aura:component>
