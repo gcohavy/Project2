@@ -17,8 +17,12 @@
                 <p>Defense: <lightning:formattedNumber value="{!a.Defense__c}" /></p>
                 <p>Experience: <lightning:formattedNumber value="{!a.Experience__c}" /></p>
                 <br />
-                <lightning:input type="checkbox" label="Select?" value="{!a.Fighter__c}" />
+                <lightning:input type="checkbox" label="Select?" checked="{!a.Fighter__c}" />
             </div>
         </aura:iteration>
+    </div>
+    
+    <div style="text-align:center;">
+        <lightning:button variant="Destructive" label="BATTLE!" onclick="{!c.fight}"/>
     </div>
 </aura:component>

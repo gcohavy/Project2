@@ -55,13 +55,42 @@ public class PokemonController {
     
     //Method to set up battle
     @AuraEnabled
-    public static List<Pokemon__c> setBattlePokemon(List<Pokemon__c> incoming) {
+    public static List<Pokemon__c> setBattlePokemon(List<Pokemon__c> incoming, ID userId) {
+        Id conId = '0033h000008frWCAAY';//[SELECT ContactId FROM User WHERE Id=:UserId].ContactId;
         //update incoming pokemon
-        //Select the first 3 pokemon who will fight
-        //Add them to the return Array
-        //Select 3 random pokemon from the API
-        //Add them to the Array
-        //return array of 6 Pokemon
-        return null;
+        update incoming;
+        //Select the first 3 pokemon who will fight and add them to return Array
+        List<Pokemon__c> returnArray = [SELECT Name, Type__c, ImageURL__c, HP__c, Attack__c, Defense__c, 
+                                    	Experience__c, Fighter__c
+                                   		FROM Pokemon__c WHERE Player__c=:conId AND Fighter__c=true LIMIT 3];
+        return returnArray;
+    }
+    
+    //Method to get 3 random Pokemon
+    @AuraEnabled
+    public static List<String> getRandomPokemon() {
+        List<String> results = new List<String>();
+        //Get random index
+        Integer searchInt;
+        for(Integer i=0; i<3;i++) {
+            do {
+                searchInt = Integer.valueOf(Math.random()*1000);
+            } while (searchInt > 807);
+            System.debug(searchInt);
+            //Get random pokemon name using index
+            Http http = new Http();
+            HttpRequest request = new HttpRequest();
+            request.setEndpoint('https://pokeapi.co/api/v2/pokemon/' + searchInt);
+            request.setMethod('GET');
+            HttpResponse response = http.send(request);
+            if(response.getStatusCode()==200){
+                System.debug('response body: ' + response.getBody());
+                results.add(response.getBody());
+            } else {
+                System.debug('Something went wrong');
+        		System.debug( 'Status Code: ' + response.getStatusCode() + '\nResponse Body: ' + response.getBody());
+            }
+        }
+        return results;
     }
 }
