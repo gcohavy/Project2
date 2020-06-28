@@ -9,8 +9,8 @@
     <aura:attribute Name='Experience' Type='Integer'/>
     <aura:attribute Name='Type' Type='String'/>
     
-    <div style="display:flex; padding:20px; margin:20px; justify-content:center; align-items:center;
-                border: 2px solid #B90">
+    <div style="display:flex; padding:20px; margin:20px auto; justify-content:center; align-items:center;
+                border: 2px solid #B90; background-color: #310; max-width: 80%;">
         <div style="margin: 20px; margin-right:50px;">
             <lightning:card title="Search for New Pokemon">
                 <div style="display:flex;flex-direction:column;margin: 20px; padding:20px; 

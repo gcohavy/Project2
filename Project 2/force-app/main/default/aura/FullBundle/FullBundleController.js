@@ -1,4 +1,13 @@
 ({
+    doInit : function(component, event, helper) {
+        let action = component.get('c.getWinLoss');
+        action.setParams({playerId: $A.get('$SObjectType.CurrentUser.Id')});
+        action.setCallback(this, (res) => {
+            component.set('v.winloss', res.getReturnValue());
+            console.log('Player winloss value returned: ' + res.getReturnValue());
+        });
+        $A.enqueueAction(action);
+    },
     battle : function(component, event, helper) {
         component.set('v.fight', true);
         let action1 = component.get('c.setBattlePokemon');
@@ -12,5 +21,6 @@
     },
     endFight : function(component, event, helper) {
         component.set('v.fight', false);
+        eval("$A.get('e.force:refreshView').fire();");
     }
 })

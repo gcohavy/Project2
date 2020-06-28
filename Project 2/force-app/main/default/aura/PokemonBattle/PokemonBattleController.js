@@ -24,6 +24,33 @@
 		$A.enqueueAction(action);
 	},
     battle : function(component, event, helper) {
-        
+        let button = event.getSource();
+        button.set('v.disabled', true);
+        let playerStats = 0;
+        let playerPokemon = component.get('v.playerPokemon');
+        playerPokemon.forEach( (p) => {
+            playerStats += p.HP__c + p.Attack__c + p.Defense__c + p.Experience__c;
+        });
+        let enemyStats = 0;
+        let enemyPokemon = component.get('v.enemyPokemon');
+        enemyPokemon.forEach((p) => {
+            enemyStats += p.stats;
+        });
+        console.log('Player stats: ' + playerStats + '\nEnemy stats: ' + enemyStats);
+        if (playerStats >= enemyStats) {
+            component.set('v.battleResult', 'YOU WIN');
+        } else {
+            component.set('v.battleResult', 'YOU LOSE');
+        }
+        component.set('v.battleOver', true);
+        //Call method to update DB
+        let action = component.get('c.postBattleUpdate');
+        action.setParams({input: component.get('v.playerPokemon'),
+            				result: component.get('v.battleResult'),
+            				UserId: $A.get('$SObjectType.CurrentUser.Id')});
+        action.setCallback(this, (res) => {
+            console.log('DB updated');
+        });
+        $A.enqueueAction(action);
     }
 })

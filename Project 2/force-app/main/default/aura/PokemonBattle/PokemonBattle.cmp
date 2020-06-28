@@ -1,6 +1,8 @@
 <aura:component controller="PokemonController">
     <aura:attribute name="playerPokemon" type="Pokemon__c[]" />
     <aura:attribute name="enemyPokemon" type="Map[]" />
+    <aura:attribute name="battleResult" type="String" />
+    <aura:attribute name="battleOver" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <div style="display:flex; justify-content: center; align-items: center;">
@@ -25,6 +27,14 @@
         </div>
     </div>
     <div style="text-align:center;">
-        <lightning:button variant="Destructive" label="Battle!" onclick="c.battle"/>
+        <lightning:button variant="Destructive" label="Battle!" onclick="{!c.battle}"/>
     </div>
+    <aura:if isTrue="{!v.battleOver}">
+    	<p style="position: fixed; display: flex; font-size: 100px; width: 500px; height: 250px;
+                  top: 50%; left:50%; margin-top: -200px; margin-left: -250px;
+                  align-items: center; color: #046; background-color: #CC6;
+                  justify-content: center;opacity: 0.8; border: 2px solid black;
+                  border-radius: 10px;">{!v.battleResult}</p>
+    </aura:if>
+    
 </aura:component>

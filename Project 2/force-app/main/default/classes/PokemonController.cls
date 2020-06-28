@@ -1,4 +1,13 @@
 public class PokemonController {
+    //Method to get the players win/loss ratio and return as a string
+    @AuraEnabled
+    public static String getWinLoss(String playerId) {
+        Id conId = [SELECT ContactId FROM User WHERE Id=:playerId].ContactId;
+        Contact player = [SELECT Name, Wins__c, Losses__c FROM Contact WHERE Id=:conId];
+        //System.debug(player.Name + ' Win/Loss: ' + player.Wins__c + '/' + player.Losses__c);
+        return player.Name + ' - Win/Loss: ' + player.Wins__c + '/' + player.Losses__c;
+    }
+    
     //Method to connect to external API and return a string of JSON 
     //(Which is easier to parse through with JS)
     @AuraEnabled
@@ -27,7 +36,7 @@ public class PokemonController {
         //UserId = ExtId;
         //UserId='0053h000002zQBtAAM';
         //System.debug(UserId);
-        Id conId = '0033h000008frWCAAY';//[SELECT ContactId FROM User WHERE Id=:UserId].ContactId;
+        Id conId = [SELECT ContactId FROM User WHERE Id=:UserId].ContactId;
         System.debug(conId);
         Pokemon__c newPok = new Pokemon__c(Name=Name, 
                                            Type__c=Typ, 
@@ -56,12 +65,12 @@ public class PokemonController {
     //Method to set up battle
     @AuraEnabled
     public static List<Pokemon__c> setBattlePokemon(List<Pokemon__c> incoming, ID userId) {
-        Id conId = '0033h000008frWCAAY';//[SELECT ContactId FROM User WHERE Id=:UserId].ContactId;
+        Id conId = [SELECT ContactId FROM User WHERE Id=:UserId].ContactId;
         //update incoming pokemon
         update incoming;
         //Select the first 3 pokemon who will fight and add them to return Array
         List<Pokemon__c> returnArray = [SELECT Name, Type__c, ImageURL__c, HP__c, Attack__c, Defense__c, 
-                                    	Experience__c, Fighter__c
+                                    	Experience__c, Fighter__c, Wins__c, Losses__c
                                    		FROM Pokemon__c WHERE Player__c=:conId AND Fighter__c=true LIMIT 3];
         return returnArray;
     }
@@ -92,5 +101,27 @@ public class PokemonController {
             }
         }
         return results;
+    }
+    
+    //Method to update pokemon and player post-battle
+    @AuraEnabled
+    public static void postBattleUpdate(List<Pokemon__c> input, String result, ID UserId) {
+        Id conId = [SELECT ContactId FROM User WHERE Id=:UserId].ContactId;
+        for (Pokemon__c p : input) {
+            if(result=='YOU WIN') {
+                p.Wins__c += 1;
+            } else {
+                p.Losses__c += 1;
+            }
+            p.Experience__c +=2;
+        }
+        update input;
+        Contact player = [SELECT Id, Wins__c, Losses__c FROM Contact WHERE Id=:conId];
+        if (result =='YOU WIN') {
+            player.Wins__c += 1;
+        } else {
+            player.Losses__c += 1;
+        }
+        update player;
     }
 }
