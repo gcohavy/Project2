@@ -1,4 +1,5 @@
 ({
+	//Helper method to collect info from the DB
 	loadPokemon : function(cmp) {
 		let action = cmp.get('c.getPlayerPokemon');
         action.setParams({ UserId: $A.get('$SObjectType.CurrentUser.Id')});

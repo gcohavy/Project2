@@ -1,23 +1,43 @@
+<!--This is the outermost component in the project. 
+    The project allows you to search through a DB of pokemon,
+    choose to add the pokemon as yours, and then select 3 pokemon
+    to battle a random selection of 3 pokemon from the DB
+    Due to the fact that it's a relatively small app, all styling was done inline
+    This component contains the 3 variables: 
+        1) fight - to indicate which components should be shown based on context
+        2) playerPokemon - to transfer object information between 2 sibling components
+        3) winloss - to render the player's win/loss stat -->
 <aura:component controller="PokemonController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <!-- Declaration of the 3 variables -->
     <aura:attribute name="fight" type="Boolean" default="false" />
     <aura:attribute name="playerPokemon" type="Pokemon__c[]" />
     <aura:attribute name="winloss" type="String" />
+    <!-- Declaration the 2 methods that should run:
+            1) on initilaization
+            2) to start a battle once the event is fired from a child component-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler event="c:BattleBegun" action="{!c.battle}" />
     
+    <!-- Render the player's win/loss data -->
     <h1><lightning:formattedText value="{!v.winloss}"/></h1>
+    <!-- Title of the page -->
     <h1 style="text-align:center; margin: 35px; font-size:18px;">POKEMON BATTLE SIMULATION</h1>
     
+    <!-- The search component and list of Player's pokemon which should be 
+            rendered before the battle button has been clicked -->
     <aura:if isTrue="{!!v.fight}">
         <c:Search />
         <c:PlayerPokemon />
     </aura:if>
     
+    <!-- Rendering the Pokemon Battle component if it begins -->
     <aura:if isTrue="{!v.fight}">
         <c:PokemonBattle playerPokemon="{!v.playerPokemon}" />
+        <!-- Back button, will refresh the page to rerender player stats after battle -->
         <div style="text-align: center; margin: 50px auto;">
         	<lightning:button variant="success" label="Back" onclick="{!c.endFight}"/>
         </div>
     </aura:if>
+    <!-- Add some space underneath for a potential future footer section -->
     <div style="height:50px;"></div>
 </aura:component>

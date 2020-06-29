@@ -2,7 +2,8 @@
     //Method to search for a pokemon in external API
 	search : function(component, event, helper) {
         let action = component.get('c.getExternalPokemon');
-        let pokemon=component.get('v.stringInput').toLowerCase();
+        let pokemon = component.get('v.stringInput').toLowerCase();
+
         action.setParams({searchItem: pokemon});
         action.setCallback(this, (res) => {
             if(res.getState() == 'SUCCESS' && res.getReturnValue != 'Pokemon not found') {
@@ -22,11 +23,12 @@
         });
         $A.enqueueAction(action);
 	},
-        //Method to add Pokemon to the DB
+    //Method to add Pokemon to the DB
     addNewPokemon: function(component, event, helper) {
         let button = event.getSource();
-        button.set('v.disabled', true);
         let action = component.get('c.addPokemon');
+
+        button.set('v.disabled', true);
         action.setParams({ Name: component.get('v.stringInput'),
                           Typ: component.get('v.Type'),
                           ImageURL: component.get('v.ImageURL'),
@@ -38,7 +40,7 @@
         //console.log($A.get('$SObjectType.CurrentUser.Id'));
         action.setCallback(this, (res)=>{
             if(res.getState() == 'SUCCESS') {
-            	console.log(res.getReturnValue());
+            	//console.log(res.getReturnValue());
             	let NewPokemon = $A.get('e.c:UpdatePokemon');
             	NewPokemon.fire();
         	} else if (res.getState() == 'ERROR'){

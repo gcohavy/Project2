@@ -1,6 +1,18 @@
+<!--
+    This component has a search bar which will make a call to the server and then
+        collect the data from the external API. It will then parse through the JSON 
+        response and render the relevant information which could then translate to creating
+        a record in the DB.
+    The component collects each piece of data as a separate variable to be assigned
+        to the different fields of the Pokemon custom object, creating a total of 8 
+        variables. In addition there is a variable to disable the add button, in order
+        to discourage duplicate records. This is especially important since the option to 
+        delete has not been added.
+    All methods in this component are attached to buttons
+-->
 <aura:component controller="PokemonController">
+    <!-- Declaring the 9 variables -->
     <aura:attribute Name='stringInput' Type='String' />
-    <aura:attribute Name='buttonDisabled' Type='Boolean' default="true" />
     <aura:attribute Name='Error' Type='String' default='null' />
     <aura:attribute Name='HP' Type='Integer'/>
     <aura:attribute Name='Attack' Type='Integer'/>
@@ -8,9 +20,13 @@
     <aura:attribute Name='ImageURL' Type='String'/>
     <aura:attribute Name='Experience' Type='Integer'/>
     <aura:attribute Name='Type' Type='String'/>
+    <aura:attribute Name='buttonDisabled' Type='Boolean' default="true" />
     
+    <!-- Container for the elements -->
     <div style="display:flex; padding:20px; margin:20px auto; justify-content:center; align-items:center;
                 border: 2px solid #B90; background-color: #310; max-width: 80%;">
+        <!-- Search bar element that searches through the external API and returns
+                relevant data -->
         <div style="margin: 20px; margin-right:50px;">
             <lightning:card title="Search for New Pokemon">
                 <div style="display:flex;flex-direction:column;margin: 20px; padding:20px; 
@@ -22,6 +38,7 @@
                 </div>
             </lightning:card>
         </div>
+        <!-- Display the results of the search and potentially add the new pokemon to the DB -->
         <lightning:card title="Search results">
             <div style="margin:20px;display:flex; flex-direction:column; justify-content:center; 
                         align-items:center; min-height:300px; min-width: 200px;">
