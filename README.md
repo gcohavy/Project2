@@ -1,4 +1,4 @@
-# Project2 - Pokemon Battle Simulation
+# Project2 - Salesforce Communities - Pokemon Battle Simulation
 
 This project incorporated lightning and aura components within a salesforce community to generate an interesting user interface
 - Consumed an external REST API to collect Pokemon Data
