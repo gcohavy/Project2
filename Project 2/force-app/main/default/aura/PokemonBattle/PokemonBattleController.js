@@ -1,5 +1,13 @@
 ({
+    //Method to get 3 random pokemon on initialization and assign them
+    //to the enemyPokemon variable with appropriate info
+    //Note that this requires a server call, and a call to an external API
+    //  which can potentially result in a much slower response time.
+    //  Potential fix can be to asynchronously get the 3 random pokemon
+    //  when the parent component is rendered and assign them on declaration 
+    //  of the component itself.
 	doInit : function(component, event, helper) {
+        //Get the 3 random pokemon
 		let action = component.get('c.getRandomPokemon');
         action.setCallback(this, (res) => {
             let jsonInstance;
@@ -22,21 +30,27 @@
             }
         });
 		$A.enqueueAction(action);
-	},
+    },
+    //Method containing the logic that determines battle results after the 
+    //button is clicked
     battle : function(component, event, helper) {
         let button = event.getSource();
-        button.set('v.disabled', true);
         let playerStats = 0;
         let playerPokemon = component.get('v.playerPokemon');
+        let enemyStats = 0;
+        let enemyPokemon = component.get('v.enemyPokemon');
+
+        //Do not allow the button to be clicked again
+        button.set('v.disabled', true);
+        //Determine player and enemy comparison
         playerPokemon.forEach( (p) => {
             playerStats += p.HP__c + p.Attack__c + p.Defense__c + p.Experience__c;
         });
-        let enemyStats = 0;
-        let enemyPokemon = component.get('v.enemyPokemon');
         enemyPokemon.forEach((p) => {
             enemyStats += p.stats;
         });
         console.log('Player stats: ' + playerStats + '\nEnemy stats: ' + enemyStats);
+        //Compare stats and determine result message to be interpreted in Apex controller
         if (playerStats >= enemyStats) {
             component.set('v.battleResult', 'YOU WIN');
         } else {

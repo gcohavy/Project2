@@ -1,34 +1,64 @@
+<!--
+    Component with the battle Layout. Renders after the Battle button has been 
+        clicked and the event has fired
+    Has 4 variables:
+        1) the 3 player pokemon
+        2) the 3 random enemy pokemon
+        3) the String that should display depending on battle result
+        4) a boolean determining if the battle is over so that it can
+            render the battle results
+    Has only the 1 method on initilization to collect the 3 enemy pokemon. Note
+        that this can take time to load on client-side after everything else is 
+        already set up. 
+    Note that as of now, the component has weak logic that just determines result
+        without taking too many factors into consideration. If the choice is made 
+        continue building, a GUI needs to be made or at least some better logic
+-->
 <aura:component controller="PokemonController">
+    <!-- Declaring the 4 variables -->
     <aura:attribute name="playerPokemon" type="Pokemon__c[]" />
     <aura:attribute name="enemyPokemon" type="Map[]" />
     <aura:attribute name="battleResult" type="String" />
     <aura:attribute name="battleOver" type="Boolean" default="false"/>
+    <!-- Declaring the inisialization method -->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
+    <!-- 
+        Container for the 3 battle elements: 
+            1) Player Pokemon
+            2) vs - can be styled to look different, perhaps even animate
+            3) Enemy pokemon
+    -->
     <div style="display:flex; justify-content: center; align-items: center;">
+        <!-- Player pokemon column -->
         <div style="display:flex; flex-direction:column;">
             <aura:iteration items="{!v.playerPokemon}" var="a">
-                <div style="display:flex; flex-directionz:row; justify-content: center; align-items: center;">
+                <div style="display:flex; flex-direction:row; justify-content: center; align-items: center;">
                     <h1>{!a.Name}</h1>
                     <img src="{!a.ImageURL__c}" alt="Pokemon Image"/>
                 </div>
             </aura:iteration>
         </div>
+        <!-- vs -->
         <div style="margin: 50px;">
         	<h1 style="font-size:18px; font-weight:700">VS.</h1>
         </div>
+        <!-- Enemy pokemon column -->
         <div>
             <aura:iteration items="{!v.enemyPokemon}" var="a">
-                <div style="display:flex; flex-directionz:row; justify-content: center; align-items: center;">
+                <div style="display:flex; flex-direction:row; justify-content: center; align-items: center;">
                     <img src="{!a.image}" alt="Pokemon Image"/>
                     <h1>{!a.name}</h1>
                 </div>
             </aura:iteration>
         </div>
     </div>
+    <!-- Button for the player to choose to fight after seeing the enemy
+        (Can potentially just click 'Back', located in parent component) -->
     <div style="text-align:center;">
         <lightning:button variant="Destructive" label="Battle!" onclick="{!c.battle}"/>
     </div>
+    <!-- Displaying the battle results -->
     <aura:if isTrue="{!v.battleOver}">
     	<p style="position: fixed; display: flex; font-size: 100px; width: 500px; height: 250px;
                   top: 50%; left:50%; margin-top: -200px; margin-left: -250px;

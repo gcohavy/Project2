@@ -1,12 +1,26 @@
+<!-- 
+    This is the component that renders all of the player's existing pokemon in the DB
+    Only one variable is declared as a list of Pokemon records
+    2 Methods are declared:
+        1) on Initialization to collect all pokemon and assign them to the list
+        2) on every time a new pokemon needs to be added, so that it immediately appears
+                in the list without needing to refresh the page
+ -->
 <aura:component controller="PokemonController">
+    <!-- Declaration of Pokemon list variable -->
     <aura:attribute name="Pokemon" type="Pokemon__c[]" />
+    <!-- Setup of the 2 methods -->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler event="c:UpdatePokemon" action="{!c.update}"/>
-	
+    
+    <!-- Title -->
     <h1 style="font-size:20px; text-align:center;margin: 20px;">Your Pokemon</h1>
+    <!-- The container for all the pokemon -->
     <div style="display:flex; margin: 10px; padding:10px; text-align:center; flex-wrap:wrap; justify-content:center;
                 align-items:center;">
+        <!-- Iterate through the Pokemon list and render specific information for each one -->
         <aura:iteration items="{!v.Pokemon}" var="a">
+            <!-- Create a 'Pokemon card' for each Pokemon listing stats and showing an image -->
             <div style="border: 5px solid #FC0; border-radius:10px; margin: 20px; min-width:250px; min-height:300px;
                         background-color:#EEF; padding: 10px;">
                 <h1 style="font-size: 18px; font-weight:700;">{!a.Name}</h1>
@@ -22,6 +36,7 @@
         </aura:iteration>
     </div>
     
+    <!-- Button to begin a battle - will fire an application event -->
     <div style="text-align:center;">
         <lightning:button variant="Destructive" label="BATTLE!" onclick="{!c.fight}"/>
     </div>
