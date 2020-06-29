@@ -8,21 +8,33 @@
     <aura:attribute Name='ImageURL' Type='String'/>
     <aura:attribute Name='Experience' Type='Integer'/>
     <aura:attribute Name='Type' Type='String'/>
-    <div style="display:flex; padding:20px; margin:20px; justify-content:center; align-items:center;">
-        <lightning:card title="Search for New Pokemon">
-            <lightning:formattedText>{!v.Error}</lightning:formattedText>
-            <lightning:input type="text" label="Search" value="{!v.stringInput}"/>
-            <lightning:button variant="success" label="Search" onclick="{!c.search}"/>
-        </lightning:card>
+    
+    <div style="display:flex; padding:20px; margin:20px auto; justify-content:center; align-items:center;
+                border: 2px solid #B90; background-color: #310; max-width: 80%;">
+        <div style="margin: 20px; margin-right:50px;">
+            <lightning:card title="Search for New Pokemon">
+                <div style="display:flex;flex-direction:column;margin: 20px; padding:20px; 
+                            justify-content:center; align-items:center;">
+                    <lightning:formattedText>{!v.Error}</lightning:formattedText>
+                    <lightning:input type="text" label="Search" value="{!v.stringInput}"/>
+                    <br />
+                    <lightning:button variant="success" label="Search" onclick="{!c.search}"/>
+                </div>
+            </lightning:card>
+        </div>
         <lightning:card title="Search results">
-            <img src='{!v.ImageURL}' alt='Image goes here'></img>
-            <p>Name: <lightning:formattedText value="{!v.stringInput}" /></p>
-            <p>Type: <lightning:formattedText value="{!v.Type}" /></p>
-            <p>HP: <lightning:formattedNumber value= "{!v.HP}" /></p>
-            <p>Attack: <lightning:formattedNumber value="{!v.Attack}" /></p>
-            <p>Defense: <lightning:formattedNumber value="{!v.Defense}" /></p>
-            <p>Experience: <lightning:formattedNumber value="{!v.Experience}" /></p>
-            <lightning:button variant="success" label="Add" onclick="{!c.addNewPokemon}" disabled="{!v.buttonDisabled}"/>
+            <div style="margin:20px;display:flex; flex-direction:column; justify-content:center; 
+                        align-items:center; min-height:300px; min-width: 200px;">
+                <img src='{!v.ImageURL}' alt='Image goes here'></img>
+                <p>Name: <lightning:formattedText value="{!v.stringInput}" /></p>
+                <p>Type: <lightning:formattedText value="{!v.Type}" /></p>
+                <p>HP: <lightning:formattedNumber value= "{!v.HP}" /></p>
+                <p>Attack: <lightning:formattedNumber value="{!v.Attack}" /></p>
+                <p>Defense: <lightning:formattedNumber value="{!v.Defense}" /></p>
+                <p>Experience: <lightning:formattedNumber value="{!v.Experience}" /></p>
+                <lightning:button variant="success" label="Add" onclick="{!c.addNewPokemon}" 
+                                  disabled="{!v.buttonDisabled}"/>
+            </div>
         </lightning:card>
     </div>
 </aura:component>

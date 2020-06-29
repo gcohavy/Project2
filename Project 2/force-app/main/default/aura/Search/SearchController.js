@@ -38,12 +38,12 @@
         //console.log($A.get('$SObjectType.CurrentUser.Id'));
         action.setCallback(this, (res)=>{
             if(res.getState() == 'SUCCESS') {
-                button.set('v.disabled', false);
             	console.log(res.getReturnValue());
+            	let NewPokemon = $A.get('e.c:UpdatePokemon');
+            	NewPokemon.fire();
         	} else if (res.getState() == 'ERROR'){
                 console.log(res.getError());
             } else {
-                button.set('v.disabled', false);
         		console.log('Error connecting to DB: ' + res.getReturnValue());
         		console.log('state: ' + res.getState());
             }

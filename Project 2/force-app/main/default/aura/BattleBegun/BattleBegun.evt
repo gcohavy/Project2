@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="playerPokemon" type="Pokemon__c[]" />
+</aura:event>

@@ -1,4 +1,23 @@
 <aura:component controller="PokemonController" implements="forceCommunity:availableForAllPageTypes" access="global">
-    <c:Search />
-    <c:PlayerPokemon />
+    <aura:attribute name="fight" type="Boolean" default="false" />
+    <aura:attribute name="playerPokemon" type="Pokemon__c[]" />
+    <aura:attribute name="winloss" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:BattleBegun" action="{!c.battle}" />
+    
+    <h1><lightning:formattedText value="{!v.winloss}"/></h1>
+    <h1 style="text-align:center; margin: 35px; font-size:18px;">POKEMON BATTLE SIMULATION</h1>
+    
+    <aura:if isTrue="{!!v.fight}">
+        <c:Search />
+        <c:PlayerPokemon />
+    </aura:if>
+    
+    <aura:if isTrue="{!v.fight}">
+        <c:PokemonBattle playerPokemon="{!v.playerPokemon}" />
+        <div style="text-align: center; margin: 50px auto;">
+        	<lightning:button variant="success" label="Back" onclick="{!c.endFight}"/>
+        </div>
+    </aura:if>
+    <div style="height:50px;"></div>
 </aura:component>

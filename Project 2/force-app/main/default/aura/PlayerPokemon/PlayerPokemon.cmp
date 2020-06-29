@@ -1,11 +1,13 @@
 <aura:component controller="PokemonController">
     <aura:attribute name="Pokemon" type="Pokemon__c[]" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-
+    <aura:handler event="c:UpdatePokemon" action="{!c.update}"/>
+	
+    <h1 style="font-size:20px; text-align:center;margin: 20px;">Your Pokemon</h1>
     <div style="display:flex; margin: 10px; padding:10px; text-align:center; flex-wrap:wrap; justify-content:center;
                 align-items:center;">
         <aura:iteration items="{!v.Pokemon}" var="a">
-            <div style="border: 5px solid #FC0; border-radius:10px; margin: 20px; min-width:250px; min-height:350px;
+            <div style="border: 5px solid #FC0; border-radius:10px; margin: 20px; min-width:250px; min-height:300px;
                         background-color:#EEF; padding: 10px;">
                 <h1 style="font-size: 18px; font-weight:700;">{!a.Name}</h1>
                 <img src='{!a.ImageURL__c}' alt='Image goes here'></img>
@@ -14,7 +16,13 @@
                 <p>Attack: <lightning:formattedNumber value="{!a.Attack__c}" /></p>
                 <p>Defense: <lightning:formattedNumber value="{!a.Defense__c}" /></p>
                 <p>Experience: <lightning:formattedNumber value="{!a.Experience__c}" /></p>
+                <br />
+                <lightning:input type="checkbox" label="Select?" checked="{!a.Fighter__c}" />
             </div>
         </aura:iteration>
+    </div>
+    
+    <div style="text-align:center;">
+        <lightning:button variant="Destructive" label="BATTLE!" onclick="{!c.fight}"/>
     </div>
 </aura:component>
