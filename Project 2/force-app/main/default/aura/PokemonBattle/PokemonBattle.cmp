@@ -64,7 +64,7 @@
                   top: 50%; left:50%; margin-top: -200px; margin-left: -250px;
                   align-items: center; color: #046; background-color: #CC6;
                   justify-content: center;opacity: 0.8; border: 2px solid black;
-                  border-radius: 10px;">{!v.battleResult}</p>
+                  border-radius: 10px; z-index: 1000;">{!v.battleResult}</p>
     </aura:if>
     
 </aura:component>
